@@ -1,0 +1,787 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"print",
+				"println"
+			],
+			[
+				"sw",
+				"swing"
+			],
+			[
+				"l",
+				"light"
+			],
+			[
+				"las",
+				"lastReportedHum"
+			],
+			[
+				"curr",
+				"currentHum"
+			],
+			[
+				"re",
+				"read"
+			],
+			[
+				"SW",
+				"SWING_OFFSET"
+			],
+			[
+				"c",
+				"checksums"
+			],
+			[
+				"fan",
+				"FAN_SPEED_OFFSET"
+			],
+			[
+				"cal",
+				"calc_checksum"
+			],
+			[
+				"HEA",
+				"HEADER1"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			],
+			[
+				"th",
+				"Theta1"
+			],
+			[
+				"The",
+				"Theta1"
+			],
+			[
+				"Th",
+				"Theta1"
+			],
+			[
+				"del",
+				"delta_1"
+			],
+			[
+				"si",
+				"sigmoidGradient"
+			],
+			[
+				"sig",
+				"sigmoid"
+			],
+			[
+				"t",
+				"Theta1"
+			],
+			[
+				"the",
+				"Theta1_grad"
+			],
+			[
+				"L_",
+				"L_in"
+			],
+			[
+				"TH",
+				"Theta2"
+			],
+			[
+				"T",
+				"Theta2"
+			],
+			[
+				"p",
+				"Pi	 Ɩ"
+			],
+			[
+				"prin",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"sr",
+				"script	Tag"
+			],
+			[
+				"act",
+				"activation3"
+			],
+			[
+				"ze",
+				"zeta2"
+			],
+			[
+				"list",
+				"listThree"
+			],
+			[
+				"listT",
+				"listThree"
+			],
+			[
+				"alpha",
+				"alpha_colours"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "lib/MySensors/core/MyGatewayTransportMQTTClient.cpp",
+			"settings":
+			{
+				"buffer_size": 5264,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/MySensors/drivers/pubsubclient/src/PubSubClient.cpp",
+			"settings":
+			{
+				"buffer_size": 16666,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/MySensors/drivers/pubsubclient/src/PubSubClient.h",
+			"settings":
+			{
+				"buffer_size": 5140,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/MySensors/MySensor.h",
+			"settings":
+			{
+				"buffer_size": 7599,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 212.0,
+		"last_filter": "insta",
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"GoSublime: ",
+				"GoSublime: Show errors"
+			],
+			[
+				"build",
+				"Build With: GoSublime"
+			],
+			[
+				"fmt",
+				"GoSublime: Fmt and save"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"ensime:",
+				"Ensime: Build"
+			],
+			[
+				"ensime: ",
+				"Ensime: Build"
+			],
+			[
+				"ensime: ser",
+				"Ensime: Server Log"
+			],
+			[
+				"ensime",
+				"Ensime: Startup"
+			],
+			[
+				"ENSIME",
+				"Ensime: Build"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"proj",
+				"AVR: Create/Update Project"
+			]
+		],
+		"width": 530.0
+	},
+	"console":
+	{
+		"height": 154.0,
+		"history":
+		[
+			"/tmp/t.py",
+			"import sublime_plugin",
+			"import sublime",
+			"print \"hola\"",
+			"clear",
+			"CLEAR",
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/core",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/drivers",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/drivers/pubsubclient",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/drivers/pubsubclient/examples",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/drivers/pubsubclient/examples/mqtt_esp8266",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/drivers/pubsubclient/src",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/src"
+	],
+	"file_history":
+	[
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/src/main.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/MyConfig.h",
+		"/home/sebas/Develop/Arduino/Home/GW-Ethernet/lib/MySensors/examples/GatewayW5100MQTTClient/GatewayW5100MQTTClient.ino",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/examples/GatewayESP8266MQTTClient/GatewayESP8266MQTTClient.ino",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyTransportNRF24.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/drivers/RF24/RF24.h",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/drivers/RF24/RF24.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyHwATMega328.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MySensorCore.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/MyConfig.h",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/MySensor.h",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyMessage.h",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyGatewayTransportMQTTClient.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyTransport.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyInclusionMode.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyGatewayTransportEthernet.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyLeds.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MySensorCore.h",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/core/MyInclusionMode.h",
+		"/home/sebas/Develop/Arduino/Home/GW/src/main.cpp",
+		"/home/sebas/Develop/Arduino/Home/GW/lib/MySensors/examples/GatewayESP8266/GatewayESP8266.ino",
+		"/home/sebas/Develop/Arduino/Home/GW/platformio.ini",
+		"/home/sebas/.platformio/lib/Ethernet_ID134/examples/WebServer/WebServer.ino",
+		"/home/sebas/.platformio/lib/Ethernet_ID134/examples/WebClient/WebClient.ino",
+		"/tmp/tempo",
+		"/home/sebas/.platformio/boards/avr.json",
+		"/home/sebas/Develop/Arduino/fuses.txt",
+		"/home/sebas/Develop/Arduino/ACNode/src/main.cpp",
+		"/home/sebas/Develop/Arduino/Node/platformio.ini",
+		"/home/sebas/Develop/Arduino/Node/src/main.cpp",
+		"/home/sebas/Develop/Arduino/Node/MySensors/libraries/MySensors/examples/DustSensor/DustSensor.ino",
+		"/home/sebas/Develop/Arduino/ACNode/platformio.ini",
+		"/home/sebas/Develop/Arduino/ACNode/lib/IRNoblex/ACNoblex.cpp",
+		"/home/sebas/Develop/Arduino/ACNode/lib/IRNoblex/ACNoblex.h",
+		"/home/sebas/Develop/Arduino/ACNode/MySensors/libraries/MySensors/examples/IrrigationController/IrrigationController.ino",
+		"/home/sebas/Develop/Arduino/ACNode/lib/MySensors/examples/RelayActuator/RelayActuator.ino",
+		"/home/sebas/Develop/Arduino/ACNode/lib/MySensors/examples/BinarySwitchSleepSensor/BinarySwitchSleepSensor.ino",
+		"/home/sebas/Develop/Arduino/ACNode/lib/MySensors/examples/BinarySwitchSensor/BinarySwitchSensor.ino",
+		"/home/sebas/Develop/Arduino/ACNode/lib/MySensors/examples/DimmableLight/DimmableLight.ino",
+		"/home/sebas/Develop/Arduino/ACNode/MySensors/libraries/MySensors/examples/HumiditySensor/HumiditySensor.ino",
+		"/home/sebas/Develop/Arduino/EthernetGW/src/GatewayUtil.h",
+		"/home/sebas/Develop/Arduino/EthernetGW/platformio.ini",
+		"/home/sebas/Develop/Arduino/EthernetGW/lib/MySensors/MyConfig.h",
+		"/home/sebas/Develop/Arduino/EthernetGW/src/EthernetGateway.cpp",
+		"/home/sebas/Develop/Arduino/EthernetGW/.gitmodules",
+		"/home/sebas/Develop/Arduino/EthernetGW/src/main.cpp",
+		"/home/sebas/Develop/Arduino/GWNode/platformio.ini",
+		"/home/sebas/Develop/Arduino/GWNode/src/main.cpp",
+		"/home/sebas/Arduino/GW/SerialGateway/SerialGateway.ino",
+		"/home/sebas/Develop/Arduino/GWNode/src/MyConfig.h",
+		"/home/sebas/.platformio/lib/Adafruit_DHT_ID19/examples/DHTtester/DHTtester.ino",
+		"/home/sebas/Develop/Arduino/IRNoblex/src/ACNoblex.cpp",
+		"/home/sebas/Develop/Arduino/IRNoblex/scripts/checksum.py",
+		"/home/sebas/Develop/Arduino/IRNoblex/doc/casos2",
+		"/home/sebas/Develop/Arduino/IRNoblex/src/main.cpp",
+		"/home/sebas/Develop/Arduino/IRNoblex/README.md",
+		"/home/sebas/Develop/Arduino/IRNoblex/scripts/encoder.py",
+		"/home/sebas/Develop/Arduino/IRNoblex/cuenta.py",
+		"/home/sebas/Develop/Arduino/IRNoblex/src/ACNoblex.h",
+		"/home/sebas/Develop/Arduino/IRNoblex/command",
+		"/home/sebas/Develop/Arduino/IRNoblex/doc/casos2.raw",
+		"/home/sebas/Develop/Arduino/IRNoblex/doc/casos.",
+		"/home/sebas/Develop/Arduino/IRNoblex/platformio.ini",
+		"/home/sebas/Develop/Arduino/IRNoblex/src/Utils.h",
+		"/home/sebas/Develop/Arduino/IRNoblex/src/IRNoblex.ino",
+		"/home/sebas/crc/sin_andar.txt",
+		"/home/sebas/crc/andando.txt",
+		"/home/sebas/crc/commands.binary",
+		"/home/sebas/crc/commands",
+		"/home/sebas/crc/decode2.py",
+		"/home/sebas/numeros.py",
+		"/home/sebas/crc/data",
+		"/home/sebas/decode2.py",
+		"/home/sebas/crc/tester.py",
+		"/home/sebas/crc/commands_binary",
+		"/home/sebas/crc/encode.c",
+		"/home/sebas/analisis.txt",
+		"/home/sebas/sample2",
+		"/home/sebas/decode.c",
+		"/home/sebas/encode.py",
+		"/home/sebas/commands_temp",
+		"/home/sebas/commands",
+		"/home/sebas/Arduino/libraries/Arduino-IRremote/IRremote.cpp",
+		"/home/sebas/Arduino/libraries/Arduino-IRremote/irSend.cpp",
+		"/home/sebas/Arduino/libraries/Arduino-IRremote/irPronto.cpp",
+		"/home/sebas/Arduino/libraries/Arduino-IRremote/examples/JVCPanasonicSendDemo/JVCPanasonicSendDemo.ino",
+		"/home/sebas/Arduino/libraries/Arduino-IRremote/ir_Panasonic.cpp",
+		"/home/sebas/Arduino/libraries/Arduino-IRremote/ir_Sanyo.cpp",
+		"/home/sebas/Arduino/libraries/Arduino-IRremote/ir_Sharp.cpp",
+		"/home/sebas/mediciones.csv",
+		"/home/sebas/codigos_ir.txt",
+		"/home/sebas/Arduino/PruebasIR/PruebasIR.ino",
+		"/home/sebas/Arduino/PruebasIR/stino.settings",
+		"/home/sebas/Develop/MySensorsArduino/libraries/MySensors/examples/IrSensor/IrSensor.ino",
+		"/tmp/off2",
+		"/tmp/on2",
+		"/tmp/on",
+		"/tmp/off",
+		"/home/sebas/Dropbox/MachineLearning/Assignments/machine-learning-ex4/ex4/sigmoidGradient.m",
+		"/home/sebas/Develop/GoLang/src/main.go",
+		"/home/sebas/.config/sublime-text-3/Packages/GoSublime/GoSublime.sublime-settings",
+		"/home/sebas/.config/sublime-text-3/Packages/GoSublime/9o.md",
+		"/usr/local/go/src/fmt/print.go",
+		"/home/sebas/.config/sublime-text-3/Packages/User/GoSublime.sublime-settings",
+		"/home/sebas/.config/sublime-text-3/Packages/GoSublime/USAGE.md",
+		"/home/sebas/.config/sublime-text-3/Packages/GoSublime/Default (Linux).sublime-keymap",
+		"/home/sebas/Develop/GoLang/src/bla.go",
+		"/home/sebas/Develop/GoLang/app.go",
+		"/home/sebas/.config/sublime-text-3/Packages/GoSublime/CHANGELOG.md",
+		"/home/sebas/Develop/Angular/course/app.js",
+		"/home/sebas/Develop/Angular/tests/index.html",
+		"/home/sebas/Develop/Angular/course/index.html",
+		"/home/sebas/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/tmp/t.py",
+		"/home/sebas/Develop/NodeJS/run.sh",
+		"/home/sebas/Develop/NodeJS/app/client/components/navbar/navbar.html",
+		"/home/sebas/Develop/NodeJS/app/client/app/main/main.html",
+		"/home/sebas/Develop/NodeJS/app/client/app/main/main.js",
+		"/home/sebas/Develop/NodeJS/docker/Dockerfile",
+		"/home/sebas/Develop/NodeJS/app/client/app/main/main-controller.js",
+		"/home/sebas/Develop/NodeJS/app/client/index.html",
+		"/home/sebas/Develop/NodeJS/app/package.json",
+		"/home/sebas/Develop/NodeJS/app/server/views/404.html",
+		"/home/sebas/Develop/NodeJS/app/server/components/errors/index.js",
+		"/home/sebas/Develop/NodeJS/app/server/config/express.js",
+		"/home/sebas/Develop/NodeJS/app/server/config/index.js",
+		"/home/sebas/Develop/NodeJS/app/server/routes.js",
+		"/home/sebas/Develop/NodeJS/app/server/app.js"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"87",
+			"nrf",
+			"speed",
+			"______________________________",
+			">\n",
+			"it:",
+			"dhcp cli",
+			"maskIRQ",
+			"irq",
+			"maskir",
+			"irq",
+			"MY_RF24",
+			"irq",
+			"hwSleep",
+			"sleep",
+			"retri",
+			"nrf",
+			"pt=",
+			"mSetPayloadType",
+			"payloadtype",
+			"inclus",
+			"inclusion",
+			"inclusionInit",
+			"inclusion",
+			"MY_DEFAULT_RX_LED_PIN",
+			"MY_LEDS_BLINKING_FEATURE",
+			"MY_DEFAULT_RX_LED_PIN",
+			"ledsInit",
+			"inclusionInit",
+			"MY_INCLUSION_FEATURE",
+			"MY_INCLUSION_BUTTON_FEATURE",
+			"MY_INCLUSION_MODE_BUTTON_PIN",
+			"inclusion",
+			"mqtt",
+			"WITH_LEDS_BLINKING",
+			"MY_IP_ADDRESS",
+			"MY_GATEWAY_ESP8266",
+			"ESP",
+			"EthernetSe",
+			"/dev/ttyUSB1",
+			"luz",
+			"setFan",
+			"setFanS",
+			"setFan",
+			"getFan",
+			"sleep",
+			"delay",
+			"spee",
+			"state",
+			"STATUS",
+			"0",
+			"data",
+			"V_STAT",
+			"type",
+			"\n#",
+			");\n",
+			"msgLight",
+			");\n",
+			"setupGateway",
+			"ethernet.h",
+			"SOFT",
+			"save",
+			"state",
+			"gw.",
+			"send",
+			"rep",
+			"Serial.println(\"_irsend",
+			")",
+			"_irsend->space(",
+			"_irsend->mark(",
+			"_irsend",
+			">=",
+			"0001000000000000000001100000101001010000000000000100000000000000",
+			"0001000010010000000000001100000101001010000000000000100000000000000",
+			"0001000000000000000001100000101001010000000000000100000000000000",
+			"00110010010100000000001000001010010 ",
+			"]\n",
+			"001100100101000000000010000010100101",
+			"s",
+			" ",
+			"\\s",
+			"^.*h\\s",
+			"00000000011000001010010s0000000000000100000000000000",
+			"00010100000000011000001010010s0000000000000100000000000000",
+			"01011000000100000000011000001010",
+			"\\s+",
+			"^\\s+",
+			"\\s+",
+			"\\\".*",
+			"\\s",
+			" ",
+			",",
+			"'",
+			"s",
+			"1",
+			"0",
+			" ",
+			"10",
+			"98",
+			"\\s+",
+			"\\s*",
+			"\\s",
+			" *",
+			"\\ *",
+			"1111",
+			"11110",
+			"01111",
+			"520",
+			"space(",
+			"mark",
+			"mark(",
+			"mark",
+			"90060A",
+			"hz",
+			"K",
+			"jump",
+			"error",
+			"back",
+			"build",
+			"close",
+			"hide",
+			"+B",
+			"- ",
+			"env",
+			"gopath",
+			"format",
+			"gem",
+			"\n	"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"$PORT",
+			"_irsend",
+			", ",
+			"",
+			"Serial.println(\"_irsend",
+			"",
+			", ",
+			"",
+			" ",
+			"1580, ",
+			"640, ",
+			"\\t",
+			", ",
+			"\\t",
+			"640",
+			")\n",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "lib/MySensors/core/MyGatewayTransportMQTTClient.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5264,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "lib/MySensors/drivers/pubsubclient/src/PubSubClient.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16666,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "lib/MySensors/drivers/pubsubclient/src/PubSubClient.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5140,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 585.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "lib/MySensors/MySensor.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7599,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4488,
+								4488
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1621.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "PlatformIO",
+	"project": "gwether.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 344.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
