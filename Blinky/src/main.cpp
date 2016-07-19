@@ -1,12 +1,10 @@
-#define MY_DEBUG
-#define MY_RADIO_NRF24
-
 #include <MyPrivateConfig.h>
 
-#define MY_NODE_ID 103
+#define MY_NODE_ID 110
+//#define MY_DEBUG_VERBOSE
 
 #include <SPI.h>
-#include <MySensor.h>
+#include <MySensors.h>
 #include <IRremote.h>
 #include <ACNoblex.h>
 #include <avr/power.h>
@@ -46,8 +44,10 @@ void receive(const MyMessage &message);
 void wakeUp();
 void updateBatteryLevel();
 
-void setup() {
-  clock_prescale_set(clock_div_8);
+void before() {
+  //clock_prescale_set(clock_div_8);
+
+  Serial.println("Initializing node...");
 
   // 1.1 V internal reference
   analogReference(INTERNAL);
@@ -55,7 +55,10 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, on ? HIGH : LOW);
 
-  Serial.println("Blinky Started");
+  Serial.println("Node initialized");
+}
+
+void setup() {
 }
 
 void presentation()  {

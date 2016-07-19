@@ -80,16 +80,16 @@
 #define MY_DEFAULT_RX_LED_PIN  0
 #define MY_DEFAULT_TX_LED_PIN  5
 
+#include <ESP8266WiFi.h>
+
 #if defined(MY_USE_UDP)
-  #include <WiFiUDP.h>
-#else
-  #include <ESP8266WiFi.h>
+  #include <WiFiUdp.h>
 #endif
 
-#include <MySensor.h>
+
+#include <MySensors.h>
 
 #include <ESP8266mDNS.h>
-#include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
 void setup() {

@@ -3,7 +3,7 @@
 #define MY_NODE_ID 103
 
 #include <SPI.h>
-#include <MySensor.h>
+#include <MySensors.h>
 #include <IRremote.h>
 #include <ACNoblex.h>
 #include <avr/power.h>
@@ -112,6 +112,10 @@ void presentation()  {
 
 void loop() {
   hwSleep(digitalPinToInterrupt(2), LOW, SLEEP_TIME);
+  //smartSleep(5 * 1000);
+  //send( msgACTemp.set(ac.getTemp()));
+
+  //smartSleep(5000);
 }
 
 void receive(const MyMessage &message) {
@@ -119,8 +123,10 @@ void receive(const MyMessage &message) {
   case CHILD_ID_AC_POWER:
     if (message.getCommand() == C_SET) {
       if (message.getBool()) {
+        Serial.println("power on");
         ac.on();
       } else {
+        Serial.println("power off");
         ac.off();
       }
       ac.sendCommand();
@@ -130,6 +136,8 @@ void receive(const MyMessage &message) {
     break;
   case CHILD_ID_AC_LIGHT:
     if (message.getCommand() == C_SET) {
+      Serial.print("light ");
+      Serial.println(message.getBool());
       ac.setLight(message.getBool());
       saveState(CHILD_ID_AC_LIGHT, ac.getLight());
       ac.sendCommand();

@@ -68,6 +68,8 @@
  */
 // Topic structure: MY_MQTT_PUBLISH_TOPIC_PREFIX/NODE-ID/SENSOR-ID/CMD-TYPE/ACK-FLAG/SUB-TYPE
 
+#define MQTT_GW
+
 #include <EEPROM.h>
 #include <SPI.h>
 #include <MyPrivateConfig.h>
@@ -86,10 +88,9 @@
   #include <ESP8266WiFi.h>
 #endif
 
-#include <MySensor.h>
+#include <MySensors.h>
 
 #include <ESP8266WiFi.h>
-#include <MySensor.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
