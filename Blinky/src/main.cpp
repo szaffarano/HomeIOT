@@ -1,126 +1,168 @@
 #include <MyPrivateConfig.h>
 
-#define MY_NODE_ID 110
-//#define MY_DEBUG_VERBOSE
-
 #include <SPI.h>
 #include <MySensors.h>
-#include <IRremote.h>
-#include <ACNoblex.h>
-#include <avr/power.h>
 
-#define SKETCH_NAME "Blinky "
-#define SKETCH_VERSION "v1.0"
+#define CHILD_ID_LIGHT      1
 
-// Wait times
-#define LONG_WAIT         500
-#define SHORT_WAIT        50
+#define EPROM_LIGHT_STATE   1
+#define EPROM_DIMMER_LEVEL  2
+#define EPROM_WATT_LEVEL    3
 
-// blinky led
-#define LED_PIN           3
+#define LIGHT_OFF           0
+#define LIGHT_ON            1
 
-// deep sleep time -> 0 = forever
-#define SLEEP_TIME        0
+#define NODE_NAME           "Dimable Light"
+#define NODE_VERSION        "1.0"
+#define NODE_ACK            true
 
-// sensors's ids
-#define CHILD_ID_LED      1
-#define CHILD_ID_BATTERY  2
+#define LED_PIN             3
 
-// battery
-#define BATTERY_SENSE_PIN A0
+int lastlightState = LIGHT_OFF;
+int lastDimValue = 100;
+int lastWattValue = 0;
 
-/* ========= global variables ========= */
-// led state
-boolean on = true;
+MyMessage lightMsg(CHILD_ID_LIGHT, V_STATUS);
+MyMessage dimmerMsg(CHILD_ID_LIGHT, V_PERCENTAGE);
 
-// battery level
-int oldBatteryPcnt = 0;
-
-// messages
-MyMessage msgLED(CHILD_ID_LED,      V_LIGHT);
-
-/* ========= function prototypes ========= */
-void receive(const MyMessage &message);
-void wakeUp();
-void updateBatteryLevel();
-
-void before() {
-  //clock_prescale_set(clock_div_8);
-
-  Serial.println("Initializing node...");
-
-  // 1.1 V internal reference
-  analogReference(INTERNAL);
-
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, on ? HIGH : LOW);
-
-  Serial.println("Node initialized");
-}
+void setCurrentState2Hardware();
+void sendCurrentState2Controller();
 
 void setup() {
+  int lightState = loadState(EPROM_LIGHT_STATE);
+  int dimValue = loadState(EPROM_DIMMER_LEVEL);
+  int wattValue = loadState(EPROM_WATT_LEVEL);
+
+  if (lightState == LIGHT_OFF || lightState == LIGHT_ON) {
+    Serial.print("Updating lightState : "); Serial.println(lightState);
+    lastlightState = lightState;
+  }
+
+  if (dimValue > 0 && dimValue <= 100) {
+      Serial.print("Updating dimValue : "); Serial.println(dimValue);
+      lastDimValue = dimValue;
+  } else if (dimValue == 0) {
+      lastlightState = LIGHT_OFF;
+  }
+
+  if (wattValue > 0) {
+    Serial.print("Updating wattValue : "); Serial.println(wattValue);
+    lastWattValue = wattValue;
+  }
+
+  pinMode(LED_PIN, OUTPUT);
+
+  setCurrentState2Hardware();
+
+  Serial.print("Node (id: "); Serial.print(getNodeId());
+  Serial.println(") ready to receive messages..." );
 }
 
-void presentation()  {
-  sendSketchInfo(SKETCH_NAME, SKETCH_VERSION);
-  wait(LONG_WAIT);
-
-  // AC presentations
-  present(CHILD_ID_LED,     S_BINARY, "led");
-  present(CHILD_ID_BATTERY, S_POWER,  "battery");
-
-  wait(SHORT_WAIT);
-
-  request(CHILD_ID_LED, V_STATUS);
+void presentation() {
+  sendSketchInfo(NODE_NAME, NODE_VERSION, NODE_ACK);
+  present(CHILD_ID_LIGHT, S_DIMMER, "LED1");
+  requestTime();
+  sendCurrentState2Controller();
 }
 
 void loop() {
-  hwSleep(digitalPinToInterrupt(2), LOW, SLEEP_TIME);
+  wait(1000);
+  //smartSleep(1000);
+  //Serial.println("awaken!");
 }
 
 void receive(const MyMessage &message) {
-  switch (message.sensor) {
-  case CHILD_ID_LED:
-    switch (message.getCommand()) {
+  Serial.print("Incoming message, command: "); Serial.print(message.getCommand());
+  Serial.print(", type: "); Serial.println(message.type);
+  int value= atoi(message.data);
+
+  switch(message.getCommand()) {
+    case C_INTERNAL:
+      switch(message.type) {
+        case I_SKETCH_NAME:
+          Serial.println("sending sketch name");
+          //sendSketchInfo(NODE_NAME, NODE_VERSION, NODE_ACK);
+          break;
+        case I_SKETCH_VERSION:
+          Serial.println("sending sketch version");
+          //sendSketchInfo(NODE_NAME, NODE_VERSION, NODE_ACK);
+          break;
+        default:
+          Serial.print("Unimplemented C_INTERNAL type: ");
+          Serial.println(message.type);
+      }
+      break;
     case C_SET:
-      on = message.getBool();
-      digitalWrite(LED_PIN, on ? HIGH : LOW);
+      switch (message.type) {
+        case V_LIGHT:
+          Serial.println( "V_LIGHT command received..." );
+          if (value == LIGHT_OFF || value == LIGHT_ON) {
+            lastlightState = value;
+            saveState(EPROM_LIGHT_STATE, lastlightState);
+          } else {
+            Serial.print( "V_LIGHT data invalid (should be 0/1): ");
+            Serial.println(value);
+          }
+        break;
+        case V_DIMMER:
+          Serial.println( "V_DIMMER command received..." );
+          if (value >= 0 || value <= 100) {
+            if (value == 0) {
+              lastlightState = LIGHT_OFF;
+            } else {
+              lastlightState = LIGHT_ON;
+            }
+            lastDimValue = value;
+            saveState(EPROM_DIMMER_LEVEL, lastDimValue);
+          } else {
+            Serial.print( "V_DIMMER data invalid (should be 0..100): ");
+            Serial.println(value);
+          }
+        break;
+        case V_WATT:
+          Serial.println( "V_WATT command received..." );
+          if (value > 0) {
+            lastWattValue = value;
+            saveState(EPROM_WATT_LEVEL, value);
+          } else {
+            Serial.print( "V_WATT data invalid (should be greater than 0): ");
+            Serial.println(value);
+          }
+        break;
+      }
+      setCurrentState2Hardware();
       break;
     case C_REQ:
-      send(msgLED.set(on));
+        Serial.println("Unimplemented C_REQ");
       break;
-    }
-    break;
-  case CHILD_ID_BATTERY:
-    switch (message.getCommand()) {
-    case C_REQ:
-      updateBatteryLevel();
-      sendBatteryLevel(oldBatteryPcnt);
-      break;
-    }
-    break;
-  default:
-    Serial.print("Unknown sensor: ");
-    Serial.println(message.sensor);
-    break;
+    default:
+      Serial.print( "Invalid command received: "); Serial.println(message.type);
   }
 
 }
 
+void setCurrentState2Hardware() {
+  if (lastlightState == LIGHT_OFF) {
+     Serial.println("Light state: OFF");
+     analogWrite(LED_PIN, 0);
+  } else {
+     Serial.print("Light state: ON, Level: ");Serial.print(lastDimValue);
+     Serial.print(", watts: "); Serial.println(lastWattValue);
 
-void updateBatteryLevel() {
-  // get the battery Voltage
-  int sensorValue = analogRead(BATTERY_SENSE_PIN);
-
-  // 1M, 470K divider across battery and using internal ADC ref of 1.1V
-  // Sense point is bypassed with 0.1 uF cap to reduce noise at that point
-  // ((1e6+470e3)/470e3)*1.1 = Vmax = 3.44 Volts
-  // 3.44/1023 = Volts per bit = 0.003363075
-  //float batteryV  = sensorValue * 0.003363075;
-  int batteryPcnt = sensorValue / 10;
-
-  if (oldBatteryPcnt != batteryPcnt) {
-    // Power up radio after sleep
-    oldBatteryPcnt = batteryPcnt;
+     analogWrite(LED_PIN, lastDimValue);
   }
+
+  //sendCurrentState2Controller();
+}
+
+void sendCurrentState2Controller() {
+  if (lastlightState == LIGHT_OFF || lastDimValue == 0) {
+    send(dimmerMsg.set(0), NODE_ACK);
+  } else {
+    send(dimmerMsg.set(lastDimValue), NODE_ACK);
+  }
+}
+
+void receiveTime(unsigned long ts) {
+  Serial.print("Time received: "); Serial.println(ts);
 }
