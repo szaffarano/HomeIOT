@@ -5,7 +5,7 @@ PlatformIO will compile them to static libraries and link to executable file.
 The source code of each library should be placed in separate directory, like
 "lib/private_lib/[here are source files]".
 
-For example, see how can be organised `Foo` and `Bar` libraries:
+For example, see how can be organized `Foo` and `Bar` libraries:
 
 |--lib
 |  |--Bar
@@ -32,7 +32,5 @@ Then in `src/main.c` you should use:
 PlatformIO will find your libraries automatically, configure preprocessor's
 include paths and build them.
 
-See additional options for PlatformIO Library Dependency Finder `lib_*`:
-
-http://docs.platformio.org/en/latest/projectconf.html#lib-install
-
+More information about PlatformIO Library Dependency Finder
+- http://docs.platformio.org/page/librarymanager/ldf.html

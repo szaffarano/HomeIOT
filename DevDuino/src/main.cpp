@@ -1,139 +1,121 @@
+#define DEVDUINO_NODE
+
 #include <MyPrivateConfig.h>
 
-#define MY_NODE_ID 105
-
-#define MY_RF24_CS_PIN  7
-#define MY_RF24_CE_PIN  8
-
-#include <SPI.h>
 #include <MySensors.h>
-#include <IRremote.h>
-#include <ACNoblex.h>
-#include <avr/power.h>
 
-#define SKETCH_NAME "DevDuino "
-#define SKETCH_VERSION "v1.0"
+#define SKETCH_NAME         "DevDuino"
+#define SKETCH_VERSION      "v1.3"
 
-#define LED_PIN   9
-#define TEMP_PIN  A2
+#define LED_CHILD_ID        1
+#define LED_CHILD_DESC      "LED"
 
-#define SLEEP_TIME (60L * 1000)
+#define TEMP_CHILD_ID       2
+#define TEMP_CHILD_DESC     "Temperatura"
 
-#define CHILD_ID_LED        1
-#define CHILD_ID_BATTERY    2
-#define CHILD_ID_TEMP       3
+#define LED_PIN             9
+#define TEMP_PIN            A2
 
-/* ========= global variables ========= */
-// led state
-boolean on = false;
+#define ONE_SEC             1000L
+#define ONE_MIN             (60L * ONE_SEC)
 
-// battery level
-long lastBattery = -100;
-float lastTemp = -1;
+#define SMART_SLEEP_DELAY   (10 * ONE_MIN)
 
-// messages
-MyMessage msgLED(CHILD_ID_LED, V_LIGHT);
-MyMessage msgBatt(CHILD_ID_BATTERY, V_VOLTAGE);
-MyMessage msgTemp(CHILD_ID_TEMP, V_TEMP);
+boolean is_on = false;
+float oldBatteryPcnt = 0;
+float oldTemp = 0;
 
-/* ========= function prototypes ========= */
-void receive(const MyMessage &message);
-void sendBattLevel();
-void sendTemp();
-float readMCP9700(int pin, float offset);
+MyMessage msgLED(LED_CHILD_ID, V_LIGHT);
+MyMessage msgTemp(TEMP_CHILD_ID, V_TEMP);
+
+bool initialValueSent = false;
+
+long readVcc();
 
 void setup() {
-  clock_prescale_set(clock_div_8);
+        clock_prescale_set(clock_div_8);
 
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, on ? HIGH : LOW);
+        pinMode(LED_PIN, OUTPUT);
+        pinMode(TEMP_PIN, INPUT);
+
+        is_on = loadState(LED_CHILD_ID);
+        digitalWrite(LED_PIN, is_on ? HIGH : LOW);
 }
 
 void presentation()  {
-  sendSketchInfo(SKETCH_NAME, SKETCH_VERSION);
-
-  // AC presentations
-  present(CHILD_ID_LED, S_BINARY, "led");
-  present(CHILD_ID_BATTERY, S_POWER, "battery");
-  present(CHILD_ID_TEMP, S_TEMP, "temperature");
+        sendSketchInfo(SKETCH_NAME, SKETCH_VERSION);
+        wait(200);
+        present(LED_CHILD_ID, S_BINARY, LED_CHILD_DESC);
+        wait(500);
+        present(TEMP_CHILD_ID, S_TEMP, TEMP_CHILD_DESC);
+        wait(500);
 }
 
 void loop() {
-  /*
-  sleep(SLEEP_TIME);
-  sendBattLevel();
-  sendTemp();
-  */
-  //hwSleep(digitalPinToInterrupt(2), LOW, 500);
-  smartSleep(30000);
+        float vcc = readVcc() / 1000.0;
+
+        float pcnt = ((float)(vcc / 3.44)) * 100;
+        float temp = (((float)analogRead(TEMP_PIN) * vcc / 1024.0) - 0.5)/0.01;
+
+        if (!initialValueSent) {
+                send(msgLED.set(is_on ? HIGH : LOW));
+                request(LED_CHILD_ID, V_STATUS);
+                wait(3000, C_SET, V_STATUS);
+
+                send(msgTemp.set(temp, 2));
+                request(TEMP_CHILD_ID, V_STATUS);
+                wait(3000, C_SET, V_STATUS);
+        }
+
+        if (oldBatteryPcnt != pcnt) {
+                sendBatteryLevel(pcnt);
+                oldBatteryPcnt = pcnt;
+        }
+        if (oldTemp != temp) {
+                send(msgTemp.set(temp, 2));
+                oldTemp = temp;
+        }
+
+        smartSleep(SMART_SLEEP_DELAY);
 }
 
 void receive(const MyMessage &message) {
-  switch (message.sensor) {
-  case CHILD_ID_LED:
-    if (message.getCommand() == C_SET && strlen(message.data) ) {
-      on = message.getBool();
-      send(msgLED.set(on));
-    }
-    digitalWrite(LED_PIN, on ? HIGH : LOW);
-    break;
-  case CHILD_ID_BATTERY:
-    if (message.getCommand() == C_REQ) {
-      sendBattLevel();
-    }
-    break;
-  case CHILD_ID_TEMP:
-    if (message.getCommand() == C_REQ) {
-      sendTemp();
-    }
-  default:
-    Serial.print("Unknown sensor: ");
-    Serial.println(message.sensor);
-    break;
-  }
+        if (message.isAck()) {
+                // ?
+        }
 
+        if (message.type == V_STATUS && message.sensor == LED_CHILD_ID) {
+                initialValueSent = true;
+
+                is_on = (bool)message.getInt();
+                digitalWrite(LED_PIN, is_on ? HIGH : LOW);
+                send(msgLED.set(is_on ? HIGH : LOW));
+                saveState(LED_CHILD_ID, is_on);
+        }
 }
 
-void sendBattLevel() {
-  uint16_t vcc = hwCPUVoltage();
-  if (vcc != lastBattery) {
-    lastBattery = vcc;
+long readVcc() {
+        // Read 1.1V reference against AVcc
+        // set the reference to Vcc and the measurement to the internal 1.1V reference
+  #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+        ADMUX = _BV(REFS0) | _BV(MUX4) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  #elif defined (__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
+        ADMUX = _BV(MUX5) | _BV(MUX0);
+  #elif defined (__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+        ADMUX = _BV(MUX3) | _BV(MUX2);
+  #else
+        ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  #endif
 
-    send(msgBatt.set(vcc));
+        delay(75); // Wait for Vref to settle
+        ADCSRA |= _BV(ADSC); // Start conversion
+        while (bit_is_set(ADCSRA,ADSC)) ; // measuring
 
-    // Calculate percentage
+        uint8_t low  = ADCL;// must read ADCL first - it then locks ADCH
+        uint8_t high = ADCH; // unlocks both
 
-    vcc = vcc - 1900; // subtract 1.9V from vcc, as this is the lowest voltage we will operate at
+        long result = (high<<8) | low;
 
-    long percent = vcc / 14.0;
-    sendBatteryLevel(percent);
-  }
-}
-
-void sendTemp() {
-  static float TEMP_SENSE_OFFSET = -0.01;
-
-  float temp = readMCP9700(TEMP_PIN,TEMP_SENSE_OFFSET); //temp pin and offset for calibration
-  if (temp != lastTemp) {
-    lastTemp = temp;
-    send(msgTemp.set(temp, 2));
-  }
-}
-
-float readMCP9700(int pin, float offset) {
-  analogReference(INTERNAL);
-
-  analogRead(A0); //perform a dummy read to clear the adc
-  delay(20);
-
-  for (int n = 0; n < 5; n++) {
-    analogRead(pin);
-  }
-
-  int adc = analogRead(pin);
-  float tSensor = ((adc * (1.1 / 1024.0)) - 0.5 + offset) * 100;
-  float error = 244e-6 * (125 - tSensor) * (tSensor - -40.0) + 2E-12 * (tSensor - -40.0) - 2.0;
-  float temp = tSensor - error;
-
-  return temp;
+        result = 1125300L / result; // Calculate Vcc (in mV); 1125300 = 1.1*1023*1000
+        return result; // Vcc in millivolts
 }
