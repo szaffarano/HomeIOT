@@ -74,7 +74,25 @@
 #include <SPI.h>
 #include <MyPrivateConfig.h>
 
+// Enable debug prints to serial monitor
+#define MY_DEBUG
+
+// Use a bit lower baudrate for serial prints on ESP8266 than default in MyConfig.h
+#define MY_BAUD_RATE 9600
+
+// Enables and select radio type (if attached)
+#define MY_RADIO_NRF24
+//#define MY_RADIO_RFM69
+
+#define MY_GATEWAY_MQTT_CLIENT
 #define MY_GATEWAY_ESP8266
+
+// Set this node's subscribe and publish topic prefix
+#define MY_MQTT_PUBLISH_TOPIC_PREFIX "mygateway1-out"
+#define MY_MQTT_SUBSCRIBE_TOPIC_PREFIX "mygateway1-in"
+
+// Set MQTT client id
+#define MY_MQTT_CLIENT_ID "mysensors-1"
 
 #define MY_WITH_LEDS_BLINKING_INVERSE
 
