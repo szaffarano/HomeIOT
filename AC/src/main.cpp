@@ -189,9 +189,18 @@ void receive(const MyMessage &message) {
       updateBatteryLevel();
       sendBatteryLevel(oldBatteryPcnt);
       break;
+    case C_PRESENTATION:
+    case C_SET:
+    case C_INTERNAL:
+    case C_STREAM:
+    case C_RESERVED_5:
+    case C_RESERVED_6:
+    case C_INVALID_7:
+      Serial.println("Unimplemented'");
+      break;
     }
     break;
-  default:
+ default:
     Serial.println("Unknown'");
     break;
   }
