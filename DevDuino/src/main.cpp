@@ -43,6 +43,7 @@ void setup() {
 }
 
 void presentation()  {
+        wait(200);
         sendSketchInfo(SKETCH_NAME, SKETCH_VERSION);
         wait(200);
         present(LED_CHILD_ID, S_BINARY, LED_CHILD_DESC);

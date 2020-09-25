@@ -31,7 +31,9 @@ void setup() {
 }
 
 void presentation()  {
+	delay(200);
         sendSketchInfo(SKETCH_NAME, SKETCH_VERSION);
+	delay(200);
         present(LED_CHILD_ID, S_BINARY, LED_CHILD_DESC);
 }
 
@@ -49,7 +51,7 @@ void loop() {
                 oldBatteryPcnt = bat;
         }
 
-        smartSleep(30000);
+        smartSleep(10L * 60 * 1000);
 }
 
 void receive(const MyMessage &message) {

@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/sebas/.platformio/penv/bin:/home/sebas/.platformio/penv:/home/sebas/projects/iot/platformio/bin:/home/sebas/.sdkman/candidates/scala/current/bin:/home/sebas/.sdkman/candidates/sbt/current/bin:/home/sebas/.sdkman/candidates/maven/current/bin:/home/sebas/.sdkman/candidates/kotlin/current/bin:/home/sebas/.sdkman/candidates/java/current/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/home/sebas/.local/bin:/home/sebas/bin:/home/sebas/.yarn/bin",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
