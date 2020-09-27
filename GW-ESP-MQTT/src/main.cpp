@@ -68,84 +68,20 @@
  */
 // Topic structure: MY_MQTT_PUBLISH_TOPIC_PREFIX/NODE-ID/SENSOR-ID/CMD-TYPE/ACK-FLAG/SUB-TYPE
 
+
 #define MQTT_GW
 
-#include <EEPROM.h>
-#include <SPI.h>
 #include <MyPrivateConfig.h>
-
-// Enable debug prints to serial monitor
-#define MY_DEBUG
-
-// Use a bit lower baudrate for serial prints on ESP8266 than default in MyConfig.h
-#define MY_BAUD_RATE 9600
-
-// Enables and select radio type (if attached)
-#define MY_RADIO_NRF24
-//#define MY_RADIO_RFM69
-
-#define MY_GATEWAY_MQTT_CLIENT
-#define MY_GATEWAY_ESP8266
-
-// Set this node's subscribe and publish topic prefix
-#define MY_MQTT_PUBLISH_TOPIC_PREFIX "mygateway1-out"
-#define MY_MQTT_SUBSCRIBE_TOPIC_PREFIX "mygateway1-in"
-
-// Set MQTT client id
-#define MY_MQTT_CLIENT_ID "mysensors-1"
-
-#define MY_WITH_LEDS_BLINKING_INVERSE
-
-#define MY_DEFAULT_ERR_LED_PIN 16
-#define MY_DEFAULT_RX_LED_PIN  0
-#define MY_DEFAULT_TX_LED_PIN  5
-
-#if defined(MY_USE_UDP)
-  #include <WiFiUDP.h>
-#else
-  #include <ESP8266WiFi.h>
-#endif
-
 #include <MySensors.h>
 
-#include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
-#include <WiFiUdp.h>
-#include <ArduinoOTA.h>
-
 void setup() {
-	WiFi.mode(WIFI_STA);
-
-	ArduinoOTA.onStart([]() {
-		Serial.println("Start");
-	});
-
-	ArduinoOTA.onEnd([]() {
-		Serial.println("\nEnd");
-	});
-	ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-		Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-	});
-	ArduinoOTA.onError([](ota_error_t error) {
-		Serial.printf("Error[%u]: ", error);
-		if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-		else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-		else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-		else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-		else if (error == OTA_END_ERROR) Serial.println("End Failed");
-	});
-
-	ArduinoOTA.begin();
-
-	Serial.println("Ready");
-	Serial.print("IP address: ");
-	Serial.println(WiFi.localIP());
-
+	// Setup locally attached sensors
 }
 
 void presentation() {
+	// Present locally attached sensors here
 }
 
 void loop() {
-	ArduinoOTA.handle();
+	// Send locally attached sensors data here
 }
