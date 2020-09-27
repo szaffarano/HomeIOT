@@ -72,7 +72,6 @@
 #include <SPI.h>
 #include <MyPrivateConfig.h>
 
-#define MY_GATEWAY_MQTT_CLIENT
 #define MY_GATEWAY_ESP8266
 
 #define MY_WITH_LEDS_BLINKING_INVERSE
@@ -80,6 +79,14 @@
 #define MY_DEFAULT_ERR_LED_PIN 16
 #define MY_DEFAULT_RX_LED_PIN  0
 #define MY_DEFAULT_TX_LED_PIN  5
+
+#if defined(MY_USE_UDP)
+  #include <WiFiUDP.h>
+#else
+  #include <ESP8266WiFi.h>
+#endif
+
+#include <MySensor.h>
 
 #include <ESP8266WiFi.h>
 #include <MySensor.h>
