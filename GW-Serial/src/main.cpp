@@ -38,11 +38,9 @@
 
 #include <MyPrivateConfig.h>
 
-// Enable serial gateway
 #define MY_GATEWAY_SERIAL
 
-#include <SPI.h>
-#include <MySensor.h>  
+#include <MySensors.h>  
 
 void setup() { 
 }
@@ -52,8 +50,3 @@ void presentation() {
 
 void loop() { 
 }
-
-
-
-
-
