@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  ha:
+    image: homeassistant/home-assistant:stable
+    container_name: ha
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config:/config
+    ports:
+      - 8123:8123
+    networks:
+      - ha
+
+networks:
+  ha:
+    driver: bridge
