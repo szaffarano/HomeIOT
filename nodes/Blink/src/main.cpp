@@ -1,27 +1,51 @@
 #include <MyPrivateConfig.h>
 #include <MySensors.h>
+#include <Bounce2.h>
 
 #define SKETCH_NAME    "Light automation"
 #define SKETCH_VERSION "1.0.0"
 
-#define LED_PIN        4
-#define LED_CHILD_ID   1
-#define LED_CHILD_DESC "LED"
+#define RELAY_PIN        4
+#define RELAY_CHILD_ID   1
+#define RELAY_CHILD_DESC "LED"
 
-MyMessage msgLED(LED_CHILD_ID, V_LIGHT);
+// Time in millis holding the button to consider it a state witch
+#define CLICK_TIME_MILLIS 300
+
+#define BUTTON_PIN 3
+
+#define BOUNCE_INTERVAL_MILLIS 20
+
+MyMessage msgRelay(RELAY_CHILD_ID, V_LIGHT);
+Bounce debouncer = Bounce();
 
 bool initialValueSent = false;
 bool            isOn = false;
 
+bool clicked;
+unsigned long buttonPressTimeStamp;
+
+void updateLEDState(bool);
+
 void before() {
+  // nothing
 }
 
 void setup() {
-   pinMode(LED_PIN, OUTPUT);
+   // set relay pin mode
+   pinMode(RELAY_PIN, OUTPUT);
 
-   isOn = loadState(LED_CHILD_ID);
+   // set button pin mode and internal pull-up
+   pinMode(BUTTON_PIN, INPUT);
+   digitalWrite(BUTTON_PIN, HIGH);
+  
+   // configure button debouncer
+   debouncer.attach(BUTTON_PIN);
+   debouncer.interval(BOUNCE_INTERVAL_MILLIS);
 
-   digitalWrite(LED_PIN, isOn ? HIGH : LOW);
+   // get relay state from eeprom and write it to the pin
+   isOn = loadState(RELAY_CHILD_ID);
+   digitalWrite(RELAY_PIN, isOn ? HIGH : LOW);
 }
 
 void presentation() {
@@ -29,27 +53,52 @@ void presentation() {
    sendSketchInfo(SKETCH_NAME, SKETCH_VERSION);
 
    wait(200);
-   present(LED_CHILD_ID, S_BINARY, LED_CHILD_DESC);
+   present(RELAY_CHILD_ID, S_BINARY, RELAY_CHILD_DESC);
 
    wait(200);
 }
 
 
 void loop() {
+   bool changed = debouncer.update();
+
    if (!initialValueSent) {
-      send(msgLED.set(isOn ? HIGH : LOW));
-      request(LED_CHILD_ID, V_STATUS);
-      wait(2000, C_SET, V_STATUS);
+      send(msgRelay.set(isOn ? HIGH : LOW));
+      request(RELAY_CHILD_ID, V_STATUS);
+      wait(1000, C_SET, V_STATUS);
    }
+
+   if (changed) {
+      int value = debouncer.read();
+      if (value == LOW) {
+         // button released
+         clicked = (millis() - buttonPressTimeStamp) >= CLICK_TIME_MILLIS;
+      } else {
+         // button pressed
+         clicked = false;
+         buttonPressTimeStamp = millis();
+      }
+   }
+  
+   if  (clicked) {
+      clicked = false;
+      updateLEDState(!isOn);
+   }
+
 }
 
 void receive(const MyMessage &message) {
-    if (message.type == V_STATUS) {
-       initialValueSent = true;
+   if (message.type == V_STATUS) {
+      initialValueSent = true;
 
-       isOn = message.getBool();
-       digitalWrite(LED_PIN, isOn ? HIGH : LOW);
-       send(msgLED.set(isOn ? HIGH : LOW));
-       saveState(LED_CHILD_ID, isOn);
-    }
+      updateLEDState(message.getBool());
+   }
 }
+
+void updateLEDState(bool newState) {
+   isOn = newState;
+   uint8_t ledState = isOn ? HIGH : LOW;
+   digitalWrite(RELAY_PIN, ledState);
+   send(msgRelay.set(ledState));
+   saveState(RELAY_CHILD_ID, isOn);
+} 
