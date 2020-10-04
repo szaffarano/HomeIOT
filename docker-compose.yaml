@@ -4,14 +4,33 @@ services:
   ha:
     image: homeassistant/home-assistant:stable
     container_name: ha
+    environment:
+      VIRTUAL_HOST:      "zaffarano.com.ar,www.zaffarano.com.ar"
+      LETSENCRYPT_HOST:  "zaffarano.com.ar,www.zaffarano.com.ar"
+      LETSENCRYPT_EMAIL: "sebas@zaffarano.com.ar"
+      VIRTUAL_PORT:      "8123"
+      TZ:                "America/Argentina/Buenos_Aires"
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"
+    depends_on:
+      - mqtt
+    restart: always
+    expose:
+      - "8123"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./config:/config
-    ports:
-      - 8123:8123
-    networks:
-      - ha
+
+  mqtt:
+    image: eclipse-mosquitto:1.6
+    container_name: mqtt
+    restart: always
+    volumes:
+      - ./mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mqtt/log:/mosquitto/log
+      - ./mqtt/data:/mosquitto/data
 
 networks:
-  ha:
-    driver: bridge
+  default:
+    external:
+      name: webproxy
