@@ -1,3 +1,6 @@
+
+[![PlatformIO Checks Status](https://github.com/szaffarano/HomeIOT/workflows/PlatformIO%20Checks/badge.svg)](https://github.com/szaffarano/HomeIOT/actions)
+
 # README
 
 Small home automation POC using a nRF24L01 [MySensors](https://www.mysensors.org/)
