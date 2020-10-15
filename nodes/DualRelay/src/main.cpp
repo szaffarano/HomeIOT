@@ -17,26 +17,31 @@
 #define DELAY_MILLIS      300
 #define LONG_DELAY_MILLIS (DELAY_MILLIS * 5)
 
+#define MIN_BAT_DIFF       5
+
 // messages to send back the state to the controller
 MyMessage msgRelayOne(RELAY_1_CHILD_ID, V_LIGHT);
 MyMessage msgRelayTwo(RELAY_2_CHILD_ID, V_LIGHT);
 
 // initialization flag
-bool initialValueSent = false;
+bool initialValueR1Sent = false;
+bool initialValueR2Sent = false;
 
 // Relays state
 bool stateRelayOne     = false;
 bool stateRelayTwo     = false;
 
+#ifdef POWERED_BY_BATTERY
 // Battery state
 uint8_t batteryPcnt = 0;
+uint8_t getBatteryLevel();
+#endif
+
+inline uint8_t stateToLogicValue(bool);
 
 void before() {
   // nothing
 }
-
-inline uint8_t stateToLogicValue(bool);
-uint8_t getBatteryLevel();
 
 void setup() {
    analogReference(INTERNAL);
@@ -49,8 +54,9 @@ void setup() {
    stateRelayOne = loadState(RELAY_1_CHILD_ID);
    stateRelayTwo = loadState(RELAY_2_CHILD_ID);
 
-   digitalWrite(RELAY_1_PIN, stateToLogicValue(stateRelayOne));
-   digitalWrite(RELAY_2_PIN, stateToLogicValue(stateRelayTwo));
+   // start with both actuators off
+   digitalWrite(RELAY_1_PIN, stateToLogicValue(false));
+   digitalWrite(RELAY_2_PIN, stateToLogicValue(false));
 }
 
 void presentation() {
@@ -63,42 +69,46 @@ void presentation() {
    present(RELAY_2_CHILD_ID, S_BINARY, RELAY_2_CHILD_DESC);
    wait(DELAY_MILLIS);
 
+#ifdef POWERED_BY_BATTERY
    sendBatteryLevel(getBatteryLevel());
    wait(DELAY_MILLIS);
+#endif
 }
 
 
 void loop() {
-   if (!initialValueSent) {
+   if (!initialValueR1Sent) {
       send(msgRelayOne.set(stateRelayOne));
       wait(DELAY_MILLIS);
 
       request(RELAY_1_CHILD_ID, V_STATUS);
-      wait(DELAY_MILLIS * 5, C_SET, V_STATUS);
+      wait(LONG_DELAY_MILLIS, C_SET, V_STATUS);
+   }
 
+   if (!initialValueR2Sent) {
       send(msgRelayTwo.set(stateRelayTwo));
       wait(DELAY_MILLIS);Serial.flush();
 
       request(RELAY_2_CHILD_ID, V_STATUS);
-      send(msgRelayTwo.set(stateRelayTwo));
-      wait(DELAY_MILLIS * 5, C_SET, V_STATUS);
+      wait(LONG_DELAY_MILLIS, C_SET, V_STATUS);
    } 
 
+#ifdef POWERED_BY_BATTERY
    float bat = getBatteryLevel();
-   if (bat != batteryPcnt) {
+   if (abs(bat - batteryPcnt) > MIN_BAT_DIFF) {
       batteryPcnt = bat;
       sendBatteryLevel(batteryPcnt);
       wait(DELAY_MILLIS);
    }
-
+#endif
 }
 
 void receive(const MyMessage &message) {
    if (message.type == V_STATUS) {
-      initialValueSent = true;
 
       switch(message.sensor) {
         case RELAY_1_CHILD_ID:
+          initialValueR1Sent = true;
           stateRelayOne = message.getBool();
 
           digitalWrite(RELAY_1_PIN, stateToLogicValue(stateRelayOne));
@@ -109,6 +119,7 @@ void receive(const MyMessage &message) {
           saveState(RELAY_1_CHILD_ID, stateRelayOne);
           break;
         case RELAY_2_CHILD_ID:
+          initialValueR2Sent = true;
           stateRelayTwo = message.getBool();
 
           digitalWrite(RELAY_2_PIN, stateToLogicValue(stateRelayTwo));
@@ -126,6 +137,7 @@ inline uint8_t stateToLogicValue(bool s) {
    return s ? LOW : HIGH;
 }
 
+#ifdef POWERED_BY_BATTERY
 uint8_t getBatteryLevel() {
    // get the battery Voltage
    int vcc = analogRead(BATTERY_SENSE_PIN);
@@ -137,3 +149,4 @@ uint8_t getBatteryLevel() {
 
    return (vcc * 0.003363075 * 100);
 }
+#endif
