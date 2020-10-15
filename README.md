@@ -1,5 +1,9 @@
 
 [![PlatformIO Checks Status](https://github.com/szaffarano/HomeIOT/workflows/PlatformIO%20Checks/badge.svg)](https://github.com/szaffarano/HomeIOT/actions)
+![Issues](https://img.shields.io/github/issues/szaffarano/HomeIOT)
+![Forks](https://img.shields.io/github/forks/szaffarano/HomeIOT)
+![Stars](https://img.shields.io/github/stars/szaffarano/HomeIOT)
+![License](https://img.shields.io/github/license/szaffarano/HomeIOT)
 
 # README
 
